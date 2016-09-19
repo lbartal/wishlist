@@ -9,6 +9,7 @@ public class Wishlist {
 	private List<Wish> wishlist = new ArrayList<Wish>();
 	// @Id
 	// @GeneratedValue(strategy = GenerationType.AUTO)
+
 	private long id;
 
 	public List<Wish> getWishlist() {
