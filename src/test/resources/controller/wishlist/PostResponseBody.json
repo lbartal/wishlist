@@ -2,12 +2,14 @@
   "wishlist": [
     {
       "name": "Kindle PaperWhite III",
-      "description": "check out on amazons site"
+      "description": "check out on amazons site",
+      "id":1
     },
     {
       "name": "John Skalzi Book",
-      "description": "from old mans war series, I read already 1,2,3,4"
+      "description": "from old mans war series, I read already 1,2,3,4",
+      "id":2
     }
   ],
-  "id": 0
+  "id": 1
 }

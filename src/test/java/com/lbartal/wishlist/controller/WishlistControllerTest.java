@@ -31,7 +31,8 @@ public class WishlistControllerTest {
 	@Test
 	public void getWishlist() throws Exception {
 		mvc.perform(MockMvcRequestBuilders.get("/wishlist").accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk()).andExpect(content().string(equalTo("{\"wishlist\":[],\"id\":0}")));
+				.andExpect(status().isOk()).andExpect(content().string(equalTo(
+						"[{\"wishlist\":[{\"name\":\"Kindle PaperWhite III\",\"description\":\"check out on amazons site\",\"id\":1},{\"name\":\"John Skalzi Book\",\"description\":\"from old mans war series, I read already 1,2,3,4\",\"id\":2}],\"id\":1}]")));
 	}
 
 	@Test
