@@ -10,14 +10,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lbartal.wishlist.domain.Wishlist;
-import com.lbartal.wishlist.repository.WishlistRepository;
 import com.lbartal.wishlist.service.WishlistServiceImpl;
 
 @RestController
 public class WishlistController {
-
-	@Autowired
-	private WishlistRepository wishlistRepository;
 
 	@Autowired
 	private WishlistServiceImpl wishlistServiceImpl;
@@ -25,16 +21,11 @@ public class WishlistController {
 	// getting wishlist of logged in user or the user identified by id.
 	@RequestMapping("/wishlist")
 	public Wishlist get(@RequestParam(value = "id", required = false) Long id) {
-		// return (List<Wishlist>) wishlistRepository.findAll();
 		return wishlistServiceImpl.get(id);
 	}
 
 	@RequestMapping(value = "/wishlist", method = RequestMethod.POST)
 	public Wishlist create(@RequestBody Wishlist wishlistRB) throws Exception {
-		Wishlist wishlist = new Wishlist(wishlistRB);
-		// System.out.println("Creating wishlist " + wishlist);
-
-		// return wishlistRepository.save(wishlist);
 		return wishlistServiceImpl.add(wishlistRB);
 
 	}
