@@ -19,6 +19,7 @@ public class WishlistController {
 	private WishlistServiceImpl wishlistServiceImpl;
 
 	// getting wishlist of logged in user or the user identified by id.
+
 	@RequestMapping("/wishlist")
 	public Wishlist get(@RequestParam(value = "id", required = false) Long id) {
 		return wishlistServiceImpl.get(id);
