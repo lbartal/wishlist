@@ -28,7 +28,7 @@ public class WishlistController {
 	@RequestMapping(value = "/wishlist", method = RequestMethod.POST)
 	public Wishlist create(@RequestBody Wishlist wishlistRB) {
 		Wishlist wishlist = new Wishlist(wishlistRB);
-		System.out.println("Creating wishlist " + wishlist);
+		// System.out.println("Creating wishlist " + wishlist);
 
 		return wishlistRepository.save(wishlist);
 

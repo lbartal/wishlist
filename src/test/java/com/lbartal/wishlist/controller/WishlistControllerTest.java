@@ -1,6 +1,7 @@
 package com.lbartal.wishlist.controller;
 
 import static org.hamcrest.Matchers.equalTo;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -30,8 +31,9 @@ public class WishlistControllerTest {
 
 	@Test
 	public void getWishlist() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.get("/wishlist").accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk()).andExpect(content().string(equalTo(
+		mvc.perform(MockMvcRequestBuilders.get("/wishlist").with(httpBasic("laszlo.bartal@gmail.com", "passwd"))
+				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+				.andExpect(content().string(equalTo(
 						"[{\"wishlist\":[{\"name\":\"Kindle PaperWhite III\",\"description\":\"check out on amazons site\",\"id\":1},{\"name\":\"John Skalzi Book\",\"description\":\"from old mans war series, I read already 1,2,3,4\",\"id\":2}],\"id\":1}]")));
 	}
 
@@ -40,8 +42,8 @@ public class WishlistControllerTest {
 		String requestBody = resourceToString("controller/wishlist/PostRequestBody.json");
 		String responseBody = resourceToString("controller/wishlist/PostResponseBody.json");
 		mvc.perform(MockMvcRequestBuilders.post("/wishlist").contentType("application/json").content(requestBody)
-				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
-				.andExpect(content().json(responseBody, true));
+				.with(httpBasic("laszlo.bartal@gmail.com", "passwd")).accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk()).andExpect(content().json(responseBody, true));
 	}
 
 	private String resourceToString(String filePath) throws IOException, URISyntaxException {
