@@ -21,6 +21,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.lbartal.wishlist.exception.WishlistException;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -34,16 +36,19 @@ public class WishlistControllerTest {
 		mvc.perform(MockMvcRequestBuilders.get("/wishlist").with(httpBasic("laszlo.bartal@gmail.com", "passwd"))
 				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
 				.andExpect(content().string(equalTo(
-						"[{\"wishlist\":[{\"name\":\"Kindle PaperWhite III\",\"description\":\"check out on amazons site\",\"id\":1},{\"name\":\"John Skalzi Book\",\"description\":\"from old mans war series, I read already 1,2,3,4\",\"id\":2}],\"id\":1}]")));
+						"{\"wishlist\":[{\"name\":\"Kindle PaperWhite III\",\"description\":\"check out on amazons site\",\"id\":1},{\"name\":\"John Skalzi Book\",\"description\":\"from old mans war series, I read already 1,2,3,4\",\"id\":2}],\"id\":1}")));
 	}
 
-	@Test
+	@Test(expected = WishlistException.class)
 	public void putWishlist() throws Exception {
 		String requestBody = resourceToString("controller/wishlist/PostRequestBody.json");
 		String responseBody = resourceToString("controller/wishlist/PostResponseBody.json");
 		mvc.perform(MockMvcRequestBuilders.post("/wishlist").contentType("application/json").content(requestBody)
 				.with(httpBasic("laszlo.bartal@gmail.com", "passwd")).accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk()).andExpect(content().json(responseBody, true));
+		mvc.perform(MockMvcRequestBuilders.post("/wishlist").contentType("application/json").content(requestBody)
+				.with(httpBasic("laszlo.bartal@gmail.com", "passwd")).accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().is5xxServerError());
 	}
 
 	private String resourceToString(String filePath) throws IOException, URISyntaxException {

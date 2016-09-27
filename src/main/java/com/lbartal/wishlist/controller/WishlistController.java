@@ -1,7 +1,5 @@
 package com.lbartal.wishlist.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lbartal.wishlist.domain.Wishlist;
 import com.lbartal.wishlist.repository.WishlistRepository;
+import com.lbartal.wishlist.service.WishlistServiceImpl;
 
 @RestController
 public class WishlistController {
@@ -20,17 +19,23 @@ public class WishlistController {
 	@Autowired
 	private WishlistRepository wishlistRepository;
 
+	@Autowired
+	private WishlistServiceImpl wishlistServiceImpl;
+
+	// getting wishlist of logged in user or the user identified by id.
 	@RequestMapping("/wishlist")
-	public List<Wishlist> get(@RequestParam(value = "name", defaultValue = "World") String name) {
-		return (List<Wishlist>) wishlistRepository.findAll();
+	public Wishlist get(@RequestParam(value = "id", required = false) Long id) {
+		// return (List<Wishlist>) wishlistRepository.findAll();
+		return wishlistServiceImpl.get(id);
 	}
 
 	@RequestMapping(value = "/wishlist", method = RequestMethod.POST)
-	public Wishlist create(@RequestBody Wishlist wishlistRB) {
+	public Wishlist create(@RequestBody Wishlist wishlistRB) throws Exception {
 		Wishlist wishlist = new Wishlist(wishlistRB);
 		// System.out.println("Creating wishlist " + wishlist);
 
-		return wishlistRepository.save(wishlist);
+		// return wishlistRepository.save(wishlist);
+		return wishlistServiceImpl.add(wishlistRB);
 
 	}
 
