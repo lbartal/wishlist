@@ -1,8 +1,6 @@
 package com.lbartal.wishlist.exception;
 
-import org.springframework.web.util.NestedServletException;
-
-public class WishlistException extends NestedServletException {
+public class WishlistException extends NestedServletxception {
 
 	public WishlistException(String message) {
 		super(message);
